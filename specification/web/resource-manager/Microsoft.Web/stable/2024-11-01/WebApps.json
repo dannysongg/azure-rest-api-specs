@@ -3837,7 +3837,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "object"
+              "$ref": "#/definitions/OneDeployStatus"
             }
           },
           "default": {
@@ -3867,6 +3867,15 @@
             "type": "string"
           },
           {
+            "name": "OneDeploy",
+            "in": "body",
+            "description": "Details of OneDeploy operation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OneDeploy"
+            }
+          },
+          {
             "$ref": "#/parameters/subscriptionIdParameter"
           },
           {
@@ -3874,11 +3883,15 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "202": {
+            "description": "Deployment is scheduled.",
             "schema": {
-              "type": "object"
+              "$ref": "#/definitions/OneDeployStatus"
             }
+          },
+          "409": {
+            "description": "Another deployment is in progress.",
+            "x-ms-error-response": true
           },
           "default": {
             "description": "App Service error response.",
@@ -5585,6 +5598,115 @@
           },
           "404": {
             "description": "MSDeploy log not found.",
+            "x-ms-error-response": true
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/onedeploy": {
+      "get": {
+        "tags": [
+          "WebApps"
+        ],
+        "summary": "Invoke onedeploy status API /api/deployments and gets the deployment status for the site",
+        "description": "Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site",
+        "operationId": "WebApps_GetInstanceOneDeployStatus",
+        "parameters": [
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Name of web app.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "description": "ID of web app instance.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/apiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OneDeployStatus"
+            }
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WebApps"
+        ],
+        "summary": "Invoke the OneDeploy publish web app extension.",
+        "description": "Description for Invoke the OneDeploy publish web app extension.",
+        "operationId": "WebApps_CreateInstanceOneDeployOperation",
+        "parameters": [
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Name of web app.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "description": "ID of web app instance.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "OneDeploy",
+            "in": "body",
+            "description": "Details of OneDeploy operation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OneDeploy"
+            }
+          },
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/apiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Deployment is scheduled.",
+            "schema": {
+              "$ref": "#/definitions/OneDeployStatus"
+            }
+          },
+          "409": {
+            "description": "Another deployment is in progress.",
             "x-ms-error-response": true
           },
           "default": {
@@ -13114,6 +13236,115 @@
         }
       }
     },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/onedeploy": {
+      "get": {
+        "tags": [
+          "WebApps"
+        ],
+        "summary": "Invoke onedeploy status API /api/deployments and gets the deployment status for the site",
+        "description": "Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site",
+        "operationId": "WebApps_GetOneDeployStatusSlot",
+        "parameters": [
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Name of web app.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slot",
+            "in": "path",
+            "description": "Name of web app slot. If not specified then will default to production slot.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/apiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OneDeployStatus"
+            }
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WebApps"
+        ],
+        "summary": "Invoke the OneDeploy publish web app extension.",
+        "description": "Description for Invoke the OneDeploy publish web app extension.",
+        "operationId": "WebApps_CreateOneDeployOperationSlot",
+        "parameters": [
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Name of web app.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slot",
+            "in": "path",
+            "description": "Name of web app slot. If not specified then will default to production slot.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "OneDeploy",
+            "in": "body",
+            "description": "Details of OneDeploy operation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OneDeploy"
+            }
+          },
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/apiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Deployment is scheduled.",
+            "schema": {
+              "$ref": "#/definitions/OneDeployStatus"
+            }
+          },
+          "409": {
+            "description": "Another deployment is in progress.",
+            "x-ms-error-response": true
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions": {
       "get": {
         "tags": [
@@ -14989,6 +15220,129 @@
           },
           "404": {
             "description": "MSDeploy log not found.",
+            "x-ms-error-response": true
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/onedeploy": {
+      "get": {
+        "tags": [
+          "WebApps"
+        ],
+        "summary": "Invoke onedeploy status API /api/deployments and gets the deployment status for the site",
+        "description": "Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site",
+        "operationId": "WebApps_GetInstanceOneDeployStatusSlot",
+        "parameters": [
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Name of web app.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slot",
+            "in": "path",
+            "description": "Name of web app slot. If not specified then will default to production slot.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "description": "ID of web app instance.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/apiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OneDeployStatus"
+            }
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WebApps"
+        ],
+        "summary": "Invoke the OneDeploy publish web app extension.",
+        "description": "Description for Invoke the OneDeploy publish web app extension.",
+        "operationId": "WebApps_CreateInstanceOneDeployOperationSlot",
+        "parameters": [
+          {
+            "$ref": "#/parameters/resourceGroupNameParameter"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Name of web app.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slot",
+            "in": "path",
+            "description": "Name of web app slot. If not specified then will default to production slot.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "description": "ID of web app instance.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "OneDeploy",
+            "in": "body",
+            "description": "Details of OneDeploy operation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OneDeploy"
+            }
+          },
+          {
+            "$ref": "#/parameters/subscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/apiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Deployment is scheduled.",
+            "schema": {
+              "$ref": "#/definitions/OneDeployStatus"
+            }
+          },
+          "409": {
+            "description": "Another deployment is in progress.",
             "x-ms-error-response": true
           },
           "default": {
@@ -26721,6 +27075,10 @@
           "description": "Package URI",
           "type": "string"
         },
+        "pullIdentity": {
+          "description": "Pull Identity",
+          "type": "string"
+        },
         "connectionString": {
           "description": "SQL Connection String",
           "type": "string"
@@ -27025,6 +27383,186 @@
     "Object": {
       "type": "object",
       "properties": {}
+    },
+    "OneDeploy": {
+      "description": "OneDeploy ARM PUT information",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "./CommonDefinitions.json#/definitions/ProxyOnlyResource"
+        }
+      ],
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/OneDeployCore",
+          "description": "Core resource properties",
+          "type": "object",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "OneDeployCore": {
+      "description": "OneDeploy ARM PUT core information",
+      "type": "object",
+      "properties": {
+        "packageUri": {
+          "description": "Package URI",
+          "type": "string"
+        },
+        "pullIdentity": {
+          "description": "Pull Identity",
+          "type": "string"
+        },
+        "type": {
+          "description": "OneDeploy artifact type",
+          "type": "string"
+        },
+        "clean": {
+          "description": "Specifies whether to clean (delete) the target deployment before deploying the artifact there.",
+          "type": "boolean"
+        },
+        "targetPath": {
+          "description": "The absolute path to deploy the artifact to.",
+          "type": "string"
+        },
+        "restart": {
+          "description": "Specifies whether to restart the app after the deployment",
+          "type": "boolean"
+        }
+      }
+    },
+    "OneDeployStatus": {
+      "description": "OneDeploy ARM response",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "./CommonDefinitions.json#/definitions/ProxyOnlyResource"
+        }
+      ],
+      "properties": {
+        "properties": {
+          "description": "OneDeployStatus resource specific properties",
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "Deployment ID",
+              "type": "string",
+              "readOnly": true
+            },
+            "status": {
+              "description": "Deployment status code",
+              "type": "integer",
+              "readOnly": true
+            },
+            "status_text": {
+              "description": "Deployment status text",
+              "type": "string",
+              "readOnly": true
+            },
+            "author_email": {
+              "description": "Author Email",
+              "type": "string",
+              "readOnly": true
+            },
+            "author": {
+              "description": "Author",
+              "type": "string",
+              "readOnly": true
+            },
+            "deployer": {
+              "description": "Deployer",
+              "type": "string",
+              "readOnly": true
+            },
+            "message": {
+              "description": "Deployment message",
+              "type": "string",
+              "readOnly": true
+            },
+            "progress": {
+              "description": "Deployment progress",
+              "type": "string",
+              "readOnly": true
+            },
+            "received_time": {
+              "format": "date-time",
+              "description": "Time deploy operation was received",
+              "type": "string",
+              "readOnly": true
+            },
+            "start_time": {
+              "format": "date-time",
+              "description": "Start time of deploy operation",
+              "type": "string",
+              "readOnly": true
+            },
+            "end_time": {
+              "format": "date-time",
+              "description": "End time of deploy operation",
+              "type": "string",
+              "readOnly": true
+            },
+            "last_success_end_time": {
+              "format": "date-time",
+              "description": "Last successful deployment end time",
+              "type": "string",
+              "readOnly": true
+            },
+            "complete": {
+              "description": "Whether the deployment operation has completed",
+              "type": "boolean",
+              "readOnly": true
+            },
+            "active": {
+              "description": "Whether the deployment operation is active",
+              "type": "boolean",
+              "readOnly": true
+            },
+            "is_temp": {
+              "description": "Whether the deployment is temporary",
+              "type": "boolean",
+              "readOnly": true
+            },
+            "is_readonly": {
+              "description": "Whether the deployment is read-only",
+              "type": "boolean",
+              "readOnly": true
+            },
+            "url": {
+              "description": "Deployment URL",
+              "type": "string",
+              "readOnly": true
+            },
+            "log_url": {
+              "description": "Deployment log URL",
+              "type": "string",
+              "readOnly": true
+            },
+            "site_name": {
+              "description": "Site name",
+              "type": "string",
+              "readOnly": true
+            },
+            "provisioningState": {
+              "description": "Provisioning state",
+              "enum": [
+                "accepted",
+                "running",
+                "succeeded",
+                "failed",
+                "canceled"
+              ],
+              "type": "string",
+              "readOnly": true,
+              "x-ms-enum": {
+                "name": "MSDeployProvisioningState",
+                "modelAsString": false
+              }
+            }
+          },
+          "x-ms-client-flatten": true
+        }
+      }
     },
     "OpenAuthenticationAccessPolicies": {
       "type": "object",
